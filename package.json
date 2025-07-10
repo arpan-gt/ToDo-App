@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A simple, responsive and user-friendly To-Do List application built using [insert your tech stack, e.g., React + Tailwind CSS + Node.js]. It helps users manage daily tasks efficiently by allowing them to add, update, delete, and mark tasks as complete.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
@@ -16,5 +17,10 @@
   "bugs": {
     "url": "https://github.com/arpan-gt/ToDo-App/issues"
   },
-  "homepage": "https://github.com/arpan-gt/ToDo-App#readme"
+  "homepage": "https://github.com/arpan-gt/ToDo-App#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "mongoose": "^8.16.2",
+    "nodemon": "^3.1.10"
+  }
 }
