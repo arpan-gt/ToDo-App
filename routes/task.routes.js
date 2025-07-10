@@ -41,7 +41,10 @@ taskRouter.get("/", authenticate, async (req, res) => {
 
   try {
     const todos = await Todo.find({ userId });
-    res.json({ todos });
+    res.json({
+      message: "all todos",
+      todos,
+    });
   } catch (e) {
     res.status(500).json({ message: "Server Error", error: e.message });
   }
