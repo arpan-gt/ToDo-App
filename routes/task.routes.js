@@ -87,4 +87,28 @@ taskRouter.put("/:id", authenticate, async (req, res) => {
     });
   }
 });
+
+// delete task
+taskRouter.delete("/:id", async (req, res) => {
+   try {
+     const taskId = req.params.id;
+ 
+    const task = await Todo.findOneAndDelete({ _id: taskId});
+
+    if (!task) {
+      return res
+        .status(404)
+        .json({ message: "Task not found or not authorized" });
+    }
+    return res.status(200).json({
+      message: "Task deleted successfully",
+      task,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: "Server error",
+      error: err.message,
+    });
+  }
+});
 export { taskRouter };
