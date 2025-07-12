@@ -50,4 +50,41 @@ taskRouter.get("/", authenticate, async (req, res) => {
   }
 });
 
+//updateExistingTask
+taskRouter.put("/:id", authenticate, async (req, res) => {
+  const { title, description } = req.body;
+  const userId = req.user.userId;
+  const taskId = req.params.id;
+
+  if (!title && !description) {
+    return res.status(400).json({
+      message: "At least one of title or description must be provided",
+    });
+  }
+
+  try {
+    const task = await Todo.findOne({ _id: taskId, userId });
+
+    if (!task) {
+      return res
+        .status(404)
+        .json({ message: "Task not found or unauthorized" });
+    }
+
+    if (title) task.title = title;
+    if (description) task.description = description;
+
+    await task.save();
+
+    return res.status(200).json({
+      message: "Task updated successfully",
+      task,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: "Server error",
+      error: err.message,
+    });
+  }
+});
 export { taskRouter };
