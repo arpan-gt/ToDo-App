@@ -67,5 +67,37 @@ userRouter.post("/signin", async (req, res) => {
   });
 });
 
-userRouter.post("/", async (req, res) => {});
+userRouter.post("/resetPassword", async (req, res) => {
+  const { email, oldPassword, newPassword } = req.body;
+  if (!email || !oldPassword || !newPassword) {
+    return res.status(401).json({
+      message: "all fields are required",
+    });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({
+        message: "user not exists",
+      });
+    }
+
+    const isPasswordCorrect = await bcrypt.compare(oldPassword, user.password);
+    if (!isPasswordCorrect) {
+      return res.status(401).json({ message: "Old password is incorrect" });
+    }
+
+    user.password = newPassword;
+    await user.save();
+    return res.status(200).json({
+      message: "password reset successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "server error",
+      error: error.message,
+    });
+  }
+});
 export { userRouter };
