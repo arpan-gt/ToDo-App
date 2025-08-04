@@ -1,4 +1,4 @@
-import { Task } from "../models/Task.models";
+import Task from "../models/Task.models";
 
 //add Task controller
 const addTask = async (req, res) => {
@@ -99,4 +99,4 @@ const deleteTask = async (req, res) => {
     });
   }
 };
-export { addTask, myTasks, updateTask,deleteTask };
+export { addTask, myTasks, updateTask, deleteTask };
